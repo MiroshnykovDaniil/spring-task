@@ -3,10 +3,7 @@ package com.tagsoft.task.spring.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /*
 *
@@ -30,18 +27,22 @@ public class User {
     private String email;
 
 
-    //@todo Make entities: State[id,name], Province[id,name], City[id,province_id,name]
-    // @todo then change user fields below according to this entities
-
     // Country: US or Canada
     private String country;
 
     //For US users: State
-    private String state;
+    @ManyToOne
+    @JoinColumn(name = "state_id",referencedColumnName = "id")
+    private State state;
 
     // For Canada users: Province & city
-    private String province;
-    private String city;
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "id")
+    private Province province;
+
+    @ManyToOne
+    @JoinColumn(name = "city_canada_id",referencedColumnName = "id")
+    private CityCanada city;
 
 
 }
